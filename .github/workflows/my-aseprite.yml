@@ -12,9 +12,11 @@ jobs:
           submodules: recursive
 
       - name: Download Skia
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          Invoke-WebRequest -Uri "https://github.com" -OutFile "skia.zip"
-          Expand-Archive -Path "skia.zip" -DestinationPath "C:\deps\skia"
+          gh release download --repo aseprite/skia --pattern "Skia-Windows-Release-x64.zip"
+          Expand-Archive -Path "Skia-Windows-Release-x64.zip" -DestinationPath "C:\deps\skia"
 
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
